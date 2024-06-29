@@ -9,30 +9,30 @@ erDiagram
 	}
 	professors {
 		INT id PK
-		VARCHAR(255) name
-		INT post_id FK "professor_posts::id"
+		VARCHAR(255) name "NN"
+		INT post_id FK "--> professor_posts::id, NN"
 	}
 	students {
 		INT id PK
-		VARCHAR(255) name
-		VARCHAR password_hash "SHA256(raw_pass)"
-		VARCHAR(255) email UK
-		INT credits
+		VARCHAR(255) name "NN"
+		VARCHAR password "NN, hashed"
+		VARCHAR(255) email UK "NN"
+		INT credits "NN"
 	}
 	classes {
 		INT id PK
-		VARCHAR(255) name
-		INT professor_id FK "--> professors::id"
-		INT day "0 <= N <= 6"
-		INT period "0 <= N <= 6"
-		INT semester "0 or 1"
+		VARCHAR(255) name "NN"
+		INT professor_id FK "--> professors::id, NN"
+		INT day "0 <= N <= 6, NN"
+		INT period "0 <= N <= 6, NN"
+		INT semester "0 or 1, NN"
 		VARCHAR summery
-		INT credits
+		INT credits "NN"
 	}
 	class_register {
 		INT id PK
-		INT student_id FK "--> studens::id"
-		INT class_id FK "--> classes::id"
+		INT student_id FK "--> studens::id, NN"
+		INT class_id FK "--> classes::id, NN"
 	}
 	professor_posts ||--|| professors : ""
 	professors ||--o{ classes : ""

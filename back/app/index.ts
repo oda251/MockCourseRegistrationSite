@@ -1,5 +1,9 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
+
 const app: express.Express = express()
+
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -30,3 +34,8 @@ const users: User[] = [
 app.get('/users', (req: express.Request, res: express.Response) => {
     res.send(JSON.stringify(users))
 })
+
+{
+	back:
+		done 
+}
