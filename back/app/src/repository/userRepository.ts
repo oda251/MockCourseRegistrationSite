@@ -1,4 +1,3 @@
-import { Tables } from '../schema'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { User } from '../types/user';
 
@@ -10,7 +9,7 @@ export class UserRepositoryImpl {
 	async findByEmail(email: string): Promise<User | null> {
 		const { data, error } = await this.db
 			.from('students')
-			.select('email, name, credits, password')
+			.select('*')
 			.eq('email', email)
 		if (error) {
 			throw error

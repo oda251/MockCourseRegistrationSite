@@ -9,39 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      class_register: {
-        Row: {
-          class_id: number
-          id: number
-          student_id: number
-        }
-        Insert: {
-          class_id: number
-          id?: number
-          student_id: number
-        }
-        Update: {
-          class_id?: number
-          id?: number
-          student_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "fk_class_id"
-            columns: ["class_id"]
-            isOneToOne: false
-            referencedRelation: "classes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "fk_student_id"
-            columns: ["student_id"]
-            isOneToOne: false
-            referencedRelation: "students"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       classes: {
         Row: {
           credits: number
@@ -49,7 +16,6 @@ export type Database = {
           id: number
           name: string
           period: number
-          professor_id: number
           semester: number
           summery: string | null
         }
@@ -59,7 +25,6 @@ export type Database = {
           id?: number
           name: string
           period: number
-          professor_id: number
           semester: number
           summery?: string | null
         }
@@ -69,13 +34,37 @@ export type Database = {
           id?: number
           name?: string
           period?: number
-          professor_id?: number
           semester?: number
           summery?: string | null
         }
+        Relationships: []
+      }
+      professor_class: {
+        Row: {
+          class_id: number
+          id: number
+          professor_id: number
+        }
+        Insert: {
+          class_id: number
+          id?: number
+          professor_id: number
+        }
+        Update: {
+          class_id?: number
+          id?: number
+          professor_id?: number
+        }
         Relationships: [
           {
-            foreignKeyName: "fk_professor_id"
+            foreignKeyName: "professor_class_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "professor_class_professor_id_fkey"
             columns: ["professor_id"]
             isOneToOne: false
             referencedRelation: "professors"
@@ -86,15 +75,15 @@ export type Database = {
       professor_posts: {
         Row: {
           id: number
-          name: string
+          name: string | null
         }
         Insert: {
           id?: number
-          name: string
+          name?: string | null
         }
         Update: {
           id?: number
-          name?: string
+          name?: string | null
         }
         Relationships: []
       }
@@ -116,10 +105,43 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "fk_post_id"
+            foreignKeyName: "professors_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "professor_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_class: {
+        Row: {
+          class_id: number
+          id: number
+          student_id: number
+        }
+        Insert: {
+          class_id: number
+          id?: number
+          student_id: number
+        }
+        Update: {
+          class_id?: number
+          id?: number
+          student_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_class_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_class_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
             referencedColumns: ["id"]
           },
         ]

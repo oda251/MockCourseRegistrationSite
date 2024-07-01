@@ -1,10 +1,10 @@
-import { UserControllerImpl } from './userController';
-import { UserRepository } from '../repository/userRepository';
+import { UserControllerImpl } from '../src/controller/userController';
+import { UserRepository } from '../src/repository/userRepository';
 import express from 'express';
 import request from 'supertest';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../types/user';
+import { User } from '../src/types/user';
 
 // モック関数の設定
 jest.mock('bcrypt');
@@ -23,12 +23,13 @@ describe('UserControllerImpl', () => {
       findByEmail: jest.fn(),
     };
     const userController = new UserControllerImpl(mockUserRepository);
-    app.post('/login', (req, res, next) => userController.loginHandler(req, res, next));
+    app.post('/login', (req, res, next) => userController.login(req, res, next));
   });
 
   it('should authenticate a user with correct credentials', async () => {
 	const password = 'password';
     const mockUser: User = {
+		id: 1,
 		email: 'test@example.com',
 		name: 'test',
 		credits: 32,

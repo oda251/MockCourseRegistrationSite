@@ -3,15 +3,17 @@ import { ParamsDictionary } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 import { UserRepository } from "../repository/userRepository";
 import { sign } from "jsonwebtoken";
-import { JwtPayload, LoginParams } from "../types/auth";
+import { JwtPayload } from "../types/auth";
+import { LoginParams } from "../types/reqparams";
 import { UserInfo } from "../types/user";
+import { StatusCodes } from "http-status-codes";
 
 export class UserControllerImpl {
 	ur: UserRepository;
 	constructor(ur: UserRepository) {
 		this.ur = ur;
 	}
-	async loginHandler(
+	async login(
 		request: Request<ParamsDictionary, string, LoginParams>,
 		response: Response<string>,
 		next: unknown
@@ -21,18 +23,18 @@ export class UserControllerImpl {
 			// ユーザの検索
 			const user = await this.ur.findByEmail(email);
 			if (!user) {
-				response.status(401).send("authentication failed");
+				response.status(StatusCodes.UNAUTHORIZED).send("authentication failed");
 				return;
 			}
 			// パスワードの照合
 			const isPasswordCorrect = await bcrypt.compare(password, user.password);
 			if (!isPasswordCorrect) {
-				response.status(401).send("authentication failed");
+				response.status(StatusCodes.UNAUTHORIZED).send("authentication failed");
 				return;
 			}
 			// JWTの生成
 			const jwtPayload: JwtPayload = {
-				email: user.email,
+				userId: user.id,
 			};
 			const token = sign(jwtPayload, process.env.JWT_SECRET as string, {
 				expiresIn: "1h"
@@ -41,7 +43,7 @@ export class UserControllerImpl {
 			response.cookie("token", token, {
 				secure: true,
 			});
-			
+
 			// ユーザ情報の返却
 			const userInfo: UserInfo = user
 			const jsonStr = JSON.stringify(userInfo);
@@ -53,7 +55,7 @@ export class UserControllerImpl {
 }
 
 export interface UserController {
-	loginHandler(
+	login(
 		request: Request<ParamsDictionary, string, LoginParams>,
 		response: Response<string>,
 		next: unknown

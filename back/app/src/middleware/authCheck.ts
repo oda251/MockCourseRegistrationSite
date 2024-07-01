@@ -12,8 +12,8 @@ export const authCheck = (
 		if (!token) {
 			throw new Error();
 		}
-		const { email } = verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-		request.userId = email;
+		const { userId } = verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+		request.userId = userId;
 		next();
 	} catch {
 		response.clearCookie("token");
