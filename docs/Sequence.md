@@ -9,19 +9,14 @@ sequenceDiagram
 	participant back as express
 	participant db as mysql
 
-	student->>front: sign in/up
+	student->>front: sign in
 	front->>back: verify-request
-	alt sign in
-		back->>db: verify email & pasword
-		break when failed
-			db-->>student: failure message
-		end
-		db->>back: user info
-		Note over back, db: info includes registrated classes
-	else sign up
-		back->>db: register user
-		db-->>back: register succeed
+	back->>db: verify email & pasword
+	break veryfying failed
+		db-->>student: failure message
 	end
+	db->>back: user info
+	Note over back, db: info includes registered classes
 	Note over back: start session
 	back->>front: uer info
 	Note over front: cache user info
@@ -39,16 +34,15 @@ sequenceDiagram
 		alt detail view
 			student->>front: click certain class
 			front->>student: detail view
-		else register
-			student->>front: click register button
-			front->>front: verify
-			break when failed
-				front->>student: failure message
-			end
-			front->>back: register request
-			back->>db: register
-			db-->>student: succeed message
 		end
+		student->>front: click register button
+		front->>front: verify
+		break veryfying failed
+			front->>student: failure message
+		end
+		front->>back: register request
+		back->>db: register
+		db-->>student: succeed message
 	else edit registration
 		student->>front: click edit button
 		front->>student: registered classes view
