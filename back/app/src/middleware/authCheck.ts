@@ -3,20 +3,23 @@ import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 export const authCheck = (
-	request: Request,
-	response: Response,
-	next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction,
 ) => {
-	try {
-		const { token } = request.cookies;
-		if (!token) {
-			throw new Error();
-		}
-		const { userId } = verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-		request.userId = userId;
-		next();
-	} catch {
-		response.clearCookie("token");
-		response.status(401).send("Authentication failed");
-	}
-}
+  try {
+    const { token } = request.cookies;
+    if (!token) {
+      throw new Error();
+    }
+    const { userId } = verify(
+      token,
+      process.env.JWT_SECRET as string,
+    ) as JwtPayload;
+    request.userId = userId;
+    next();
+  } catch {
+    response.clearCookie("token");
+    response.status(401).send("Authentication failed");
+  }
+};

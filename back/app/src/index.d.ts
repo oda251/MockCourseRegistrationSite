@@ -1,7 +1,7 @@
-import { Express } from 'express-serve-static-core';
+import type { Express } from "express-serve-static-core";
 
-declare module 'express-serve-static-core' {
-	interface Request {
-		userId: number;
-	}
+declare module "express-serve-static-core" {
+  interface Request {
+    userId: number;
+  }
 }

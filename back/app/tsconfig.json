@@ -1,11 +1,13 @@
 {
-	"compilerOptions": {
-		"module": "CommonJS",
-		"types": ["jest"],
-		"strict": true,
-		"esModuleInterop": true,
-	},
-	"include": [
-		"src/**/*.ts"
-, "__tests__/classController.test.ts", "__tests__/userController.test.ts"	]
+  "compilerOptions": {
+    "module": "CommonJS",
+    "types": ["jest"],
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "__tests__/classController.test.ts",
+    "__tests__/userController.test.ts"
+  ]
 }
