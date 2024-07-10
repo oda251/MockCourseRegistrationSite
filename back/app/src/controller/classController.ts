@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
-import { Class } from "../types/class";
-import { RegisterParams } from "../types/reqParams";
+import { Class } from "../@types/class";
+import { RegisterParams } from "../@types/reqParams";
 import { ClassRepository } from "../repository/classRepository";
 import { StatusCodes } from "http-status-codes";
 
@@ -52,6 +52,10 @@ export class ClassControllerImpl {
   ): Promise<Class[] | null> {
     try {
       const userId = request.userId;
+      if (!userId) {
+        response.status(StatusCodes.UNAUTHORIZED).send("unauthorized user");
+        return null;
+      }
       const classes = await this.cr.fetchRegistratedClasses(userId);
       if (!classes) {
         response.status(StatusCodes.NOT_FOUND).send("classes not found");
@@ -70,6 +74,10 @@ export class ClassControllerImpl {
   ): Promise<boolean> {
     try {
       const userId = request.userId;
+      if (!userId) {
+        response.status(StatusCodes.UNAUTHORIZED).send("unauthorized user");
+        return false;
+      }
       const classId = request.body.classId;
       if (classId <= 0) {
         response.status(StatusCodes.BAD_REQUEST).send("invalid classId");
@@ -117,6 +125,10 @@ export class ClassControllerImpl {
   ): Promise<boolean> {
     try {
       const userId = request.userId;
+      if (!userId) {
+        response.status(StatusCodes.UNAUTHORIZED).send("unauthorized user");
+        return false;
+      }
       const classId = request.body.classId;
       if (classId <= 0) {
         response.status(StatusCodes.BAD_REQUEST).send("invalid classId");

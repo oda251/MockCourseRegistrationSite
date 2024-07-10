@@ -1,4 +1,4 @@
-import { JwtPayload } from "../types/auth";
+import { JwtPayload } from "../@types/auth";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 

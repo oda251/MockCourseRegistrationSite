@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
-import { Class } from "../types/class";
-import { ProfessorDataParams } from "../types/reqParams";
+import { Class } from "../@types/class";
+import { ProfessorDataParams } from "../@types/reqParams";
 import { StatusCodes } from "http-status-codes";
 import { ProfessorRepository } from "../repository/professorRepository";
 

@@ -1,13 +1,13 @@
 {
+  "ts-node": {
+    "files": true
+  },
   "compilerOptions": {
     "module": "CommonJS",
     "types": ["jest"],
+    "typeRoots": ["src/@types", "./node_modules/@types"],
     "strict": true,
     "esModuleInterop": true
   },
-  "include": [
-    "src/**/*.ts",
-    "__tests__/classController.test.ts",
-    "__tests__/userController.test.ts"
-  ]
+  "include": ["src/**/*"]
 }

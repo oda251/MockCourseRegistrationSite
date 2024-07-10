@@ -3,9 +3,9 @@ import { ParamsDictionary } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 import { UserRepository } from "../repository/userRepository";
 import { sign } from "jsonwebtoken";
-import { JwtPayload } from "../types/auth";
-import { LoginParams } from "../types/reqParams";
-import { UserInfo } from "../types/user";
+import { JwtPayload } from "../@types/auth";
+import { LoginParams } from "../@types/reqParams";
+import { UserInfo } from "../@types/user";
 import { StatusCodes } from "http-status-codes";
 
 export class UserControllerImpl {

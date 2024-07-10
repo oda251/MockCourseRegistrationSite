@@ -1,6 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Class } from "../types/class";
-import { Professor } from "../types/professor";
+import { Class } from "../@types/class";
+import { Professor } from "../@types/professor";
 
 export interface ProfessorRepository {
   fetchProfessorClasses(professorId: number): Promise<Class[] | null>;

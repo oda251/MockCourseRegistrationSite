@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Class } from "../types/class";
+import { Class } from "../@types/class";
 
 export interface ClassRepository {
   fetchClass(classId: number): Promise<Class | null>;
